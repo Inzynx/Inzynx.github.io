@@ -1,0 +1,201 @@
+/* Achtergrond en basislayout */
+body {
+  background: #000;
+  color: #ccc; /* lichtgrijs voor contrast met rood logo */
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;     /* verticaal centreren in viewport */
+  justify-content: center; /* horizontaal centreren */
+}
+
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;  /* elementjes onder elkaar */
+  align-items: center;     /* lijn alles midden */
+  text-align: center;
+  gap: 0.75rem;            /* mooi luchtje tussen regels en knoppen */
+}
+
+/* Achtergrond fade-logo */
+.bg-logo {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
+  pointer-events: none;
+  opacity: 0.15;
+  z-index: 0;
+}
+
+/* Typewriter: inline-block ➜ block zodat elke regel zijn eigen lijn neemt */
+.typewriter {
+  display: block;        /* <— NIET meer inline-block */
+  overflow: hidden;
+  margin: 0 auto;        /* horizontaal centreren binnen wrapper */
+  max-width: 100%;
+}
+
+/* Grote tekst voor greeting */
+#typed-text {
+  font-size: 2rem;
+}
+
+/* Kleinere tekst voor subtitle */
+#typed-subtitle {
+  font-size: 1.2rem;
+  color: #aaa;
+  margin-bottom: 1.5rem;
+}
+
+/* Cursor styling: alleen actief element krijgt deze class */
+.cursor {
+  border-right: 2px solid #ececec;
+  animation: blink-caret 0.75s step-end infinite;
+}
+
+@keyframes blink-caret {
+  50% {
+    border-color: transparent;
+  }
+}
+
+/* Nav-buttons */
+#nav-buttons {
+  opacity: 0;
+  transition: opacity 1.5s ease-in;
+  margin-top: 1.5rem;
+}
+
+/* "Glitchy" login-achtige buttons */
+.glitch-btn {
+  display: inline-block;
+  margin: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: transparent;
+  color: #ccc;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+  position: relative;
+  transition: all 0.2s ease;
+  font-family: monospace;
+  overflow: hidden;
+}
+
+.glitch-btn::before,
+.glitch-btn::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: #ccc;
+  mix-blend-mode: difference;
+  opacity: 0;
+  animation: glitch 2s infinite;
+}
+
+.glitch-btn:hover {
+  background: #ccc;
+  color: #000;
+  box-shadow: 0 0 10px #ff0000, 0 0 40px #00ffcc33;
+}
+
+@keyframes glitch {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  20% {
+    opacity: 0.3;
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    opacity: 0.1;
+    transform: translate(2px, -2px);
+  }
+  60% {
+    opacity: 0.4;
+    transform: translate(-1px, 1px);
+  }
+  80% {
+    opacity: 0.2;
+    transform: translate(1px, -1px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+}
+
+/* ---------- 1. HACKER BUTTON ---------- */
+.hacker-btn {
+  display:inline-block; padding:.8rem 2rem;
+  font:700 1rem 'Courier New', monospace;
+  color:#c6b8a9; background:#000; border:2px solid #c6b8a9;
+  text-decoration:none; position:relative; cursor:pointer;
+  filter:drop-shadow(0 0 6px #c6b8a9); overflow:hidden;
+  transition:background .2s;
+}
+/* scan-line glitch */
+.hacker-btn::after {
+  content:''; position:absolute; inset:0;
+  background:repeating-linear-gradient(
+    0deg, transparent 0 2px, #b13232 2px 4px);
+  mix-blend-mode:screen; pointer-events:none;
+  animation:scan 3s linear infinite;
+}
+@keyframes scan { 0%{transform:translateY(-100%)} 100%{transform:translateY(100%)} }
+.hacker-btn:hover   { background:#c6b8a9; color:#000 }
+.hacker-btn:hover::after { opacity:0 } /* cleaner on hover */
+
+/* ---------- 2. TERMINAL OVERLAY ---------- */
+.terminal-overlay {
+  position:fixed; inset:0; background:#000; color:#c6b8a9;
+  font:1rem/1.4 'Courier New', monospace;
+  padding:5rem 2rem; overflow:auto; z-index:9999;
+}
+/* CRT-scanlines & vage ruis */
+.terminal-overlay::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(
+       rgba(0,0,0,.1) 0, rgba(0,0,0,0) 2px),
+             url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgZmlsbD0iI2ZmZiIgY3g9IjAuNSIgY3k9IjAuNSIgcj0iMC41Ii8+PC9zdmc+");
+  background-size:100% 4px, 2px 2px;
+  mix-blend-mode:overlay; opacity:.15; pointer-events:none;
+}
+.cursor-green {
+  color:#c6b8a9; animation:blink 1s step-end infinite;
+}
+@keyframes blink {50%{opacity:0}}
+
+/* Links die uit de terminal komen */
+.terminal-overlay a { color:#c6b8a9; text-decoration:none }
+.terminal-overlay a:hover { text-decoration:underline }
+
+/* ----------  logo (top-left) ---------- */
+.logo-link {
+  position:fixed; top:16px; left:16px; z-index:10000;
+  filter:drop-shadow(0 0 4px #b13232);
+}
+.logo-link img { height:48px; }
+/* terminal overlay already at z-index:9999, logo stays above */
+
+/* ----------  link style inside ls -l ---------- */
+.term-link {
+  color:#b13232; text-decoration:none; font-weight:700;
+  position:relative; padding-left:1.1em;
+}
+.term-link::before {
+  content:'▶'; position:absolute; left:0; opacity:0;
+  transition:opacity .2s;
+}
+.term-link:hover::before { opacity:1; }
+.term-link:hover { text-decoration:underline; }

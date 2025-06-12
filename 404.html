@@ -1,25 +1,138 @@
 ---
 permalink: /404.html
-layout: page
+layout: none        # bypasses your normal page layout
+title: 404
 ---
 
-<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>404 – Lost in Cyberspace</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<div class="container">
-  <h1>404</h1>
+  <!-- ==== in-file CSS ================================================= -->
+  <style>
+  /* ─── kleurvariabelen ─────────────────────────────────────────────── */
+:root{
+  /* basiskleuren */
+  --bg:        #000;        /* pagina‐achtergrond (zwart)      */
+  --fg:        #c6b8a9;     /* hoofdtekst (“h4ck3r.be”)        */
+  --brand:     #b13232;     /* rode logotint                   */
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+  /* accent / highlights */
+  --accent:    #c6b8a9;     /*                                  */
+  --dim:       #807468;     /* subtiele, gedimde tekst          */
+
+  /* terminal-achtige scanlines */
+  --scan: repeating-linear-gradient(
+            0deg,
+            transparent 0 2px,
+            rgba(177, 50, 50, 0.08) 2px 4px); /* scanlijnen in zacht rood */
+}
+
+  *{box-sizing:border-box;margin:0}
+  html,body{height:100%}
+  body{
+    display:flex;align-items:center;justify-content:center;
+    background:var(--bg);color:var(--fg);font-family:Courier,monospace;
+    overflow:hidden;position:relative;
+  }
+
+@keyframes scroll {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+body::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+
+  /* 1×1-px SVG-ruis, één doorlopende regel + # → %23 */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3Ccircle cx='0.5' cy='0.5' r='0.5' fill='%23fff' opacity='0.15' /%3E%3C/svg%3E");
+  background-size: 2px 2px;
+
+  mix-blend-mode: overlay;
+  opacity: .5;
+  pointer-events: none;
+}
+
+
+  /* ── scan-line & static noise overlay ────────────────────────────── */
+  body::before{
+    content:'';position:absolute;inset:0;
+    background:var(--scan);
+    mix-blend-mode:overlay;pointer-events:none;
+    animation:scroll 4s linear infinite;
+  }
+
+  /* ── center box ─────────────────────────────────────────────────── */
+  .box{text-align:center;max-width:700px;padding:2rem;z-index:2}
+  .glitch{
+    position:relative;font-size:8rem;font-weight:700;
+    letter-spacing:-4px;line-height:1;filter:drop-shadow(0 0 8px var(--accent));
+  }
+  /* duplicate layers for color-shift glitch */
+  .glitch::before,.glitch::after{
+    content:attr(data-text);position:absolute;inset:0;
+    clip-path:var(--clip);
+    animation:glitch 2s infinite steps(20);
+  }
+  .glitch::before{color:#b13232}
+  .glitch::after {color:#5e5e5e}
+  @keyframes glitch{
+    0%,100%{clip-path:inset(0)}
+    10% {clip-path:inset(0 0 85% 0)}
+    20% {clip-path:inset(15% 0 60% 0)}
+    30% {clip-path:inset(40% 0 30% 0)}
+    40% {clip-path:inset(70% 0 5% 0)}
+    50% {clip-path:inset(0 0 85% 0)}
+    60% {clip-path:inset(10% 0 55% 0)}
+    70% {clip-path:inset(35% 0 35% 0)}
+    80% {clip-path:inset(60% 0 20% 0)}
+    90% {clip-path:inset(80% 0 0 0)}
+  }
+
+  p{margin:.8rem 0;font-size:1.1rem}
+  .btn{
+    display:inline-block;margin-top:1.6rem;padding:.9rem 2.3rem;
+    color:var(--fg);border:2px solid var(--fg);
+    text-decoration:none;font-weight:700;position:relative;
+    filter:drop-shadow(0 0 6px var(--accent));
+    transition:.25s;
+  }
+  .btn:hover{background:var(--fg);color:#000}
+
+  /* code-block style */
+  code{
+    background:#111;padding:.2em .4em;border-radius:3px;
+    color:var(--accent);font-weight:700;
+  }
+
+  /* logo top-left (optional) */
+  .logo{
+    position:fixed;top:16px;left:16px;z-index:3;
+    filter:drop-shadow(0 0 4px var(--fg));
+  }
+  .logo img{height:46px}
+  </style>
+</head>
+
+<body>
+
+  <!-- clickable logo back to home (replace src) -->
+  <a href="/" class="logo"><img src="/assets/images/favicon.png" alt="Home"></a>
+
+  <div class="box">
+    <h1 class="glitch" data-text="404">404</h1>
+
+    <p><strong>System anomaly detected.</strong></p>
+    <p>The resource you seek isn’t on this node.</p>
+    <p>Use the button below.</p>
+
+    <a class="btn" href="/">RETURN HOME ▊</a>
+  </div>
+
+</body>
+</html>
