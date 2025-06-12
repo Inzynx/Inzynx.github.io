@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>{{ page.title }}</title>
@@ -7,23 +8,47 @@
   <link rel="stylesheet" href="/assets/css/main.css" />
   <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
 </head>
+
 <body>
-  <!-- ⇦ Home-logo  -->
-  <a href="/" class="logo-link">
-    <img src="/assets/images/favicon.png" alt="Inzynx" />
-  </a>
+
+  <nav id="topbar" class="topbar hidden">
+    <div class="nav-container">
+      <a href="#home" class="logo-link">
+        <img src="/assets/images/favicon.png" alt="Inzynx" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#Whoami">Whoami</a></li>
+      </ul>
+    </div>
+  </nav>
 
   <img class="bg-logo" src="/assets/images/bg-logo.png" alt="bg">
 
   <div class="content-wrapper">
-    <div id="typed-text"     class="typewriter"></div>
+    <div id="typed-text" class="typewriter"></div>
     <div id="typed-subtitle" class="typewriter"></div>
-    <a id="login-btn" class="hacker-btn">Login ▊</a>
   </div>
 
-  <div id="terminal" class="terminal-overlay" hidden>
-    <pre id="term-text"></pre><span class="cursor-green" id="term-cursor">▊</span>
+  <!-- herhaal dit blok zoveel je wil -->
+  <section id="Whoami" class="page-section hidden">
+    <h2>Whoami</h2>
+    <p></p>
+
+    <div class="info-block">
+      <img src="/assets/images/Ghost.png" alt="Ghost">
+      <div>
+        <h3>Inzynx</h3>
+        <p>Pentester gepassioneerd door cybersecurity, malwareontwikkeling en research. Altijd op zoek naar nieuwe uitdagingen en innovatieve manieren om digitale beveiliging te versterken. Code, exploit en ontdek – dat is mijn wereld.</p>
+        <a href="#"></a>
+      </div>
+    </div>
+
+  </section>
+  <!-- repeat this section and make sure to change the ID-->
+
   </div>
+
 
   <script src="/assets/js/typewriter.js"></script>
   <script src="/assets/js/terminal.js"></script>

@@ -29,10 +29,4 @@ async function boot(){
      await sleep(200);
   }
   termCursor.remove();
-}
-
-loginBtn.addEventListener('click',()=>{
-  termBox.hidden=false;
-  loginBtn.style.display='none';
-  boot();
-});
+};

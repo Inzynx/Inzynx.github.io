@@ -180,17 +180,9 @@ body {
 .terminal-overlay a { color:#c6b8a9; text-decoration:none }
 .terminal-overlay a:hover { text-decoration:underline }
 
-/* ----------  logo (top-left) ---------- */
-.logo-link {
-  position:fixed; top:16px; left:16px; z-index:10000;
-  filter:drop-shadow(0 0 4px #b13232);
-}
-.logo-link img { height:48px; }
-/* terminal overlay already at z-index:9999, logo stays above */
-
 /* ----------  link style inside ls -l ---------- */
 .term-link {
-  color:#b13232; text-decoration:none; font-weight:700;
+  color:#c6b8a9; text-decoration:none; font-weight:700;
   position:relative; padding-left:1.1em;
 }
 .term-link::before {
@@ -199,3 +191,107 @@ body {
 }
 .term-link:hover::before { opacity:1; }
 .term-link:hover { text-decoration:underline; }
+
+
+/* --- Navigatiebalk bovenaan --- */
+.topbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #0f0f0f;
+  color: #ffffff;
+  padding: 1.5rem 1.5rem;
+  z-index: 1000;
+  box-shadow: 0 0 10px rgba(252, 252, 252, 0.2);
+}
+
+/* Container met flex maar geen space-between */
+.nav-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centreren van links */
+}
+
+/* Logo helemaal links in de hoek met absolute positioning */
+.logo-link {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding-left: 1rem;
+}
+
+.logo-link img {
+  height: 42px;
+  filter: drop-shadow(0 0 4px #c6b8a9);
+}
+
+/* Menu gecentreerd */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li a {
+  color: #c6b8a9;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.nav-links li a:hover {
+  color: #ffffff;
+}
+
+/* Verborgen standaard */
+.hidden {
+  display: none;
+}
+
+
+.page-section {
+  padding: 4rem 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  color: #fff;
+}
+
+
+/* --- Herbruikbaar contentblok voor alle secties --- */
+.info-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  background-color: #1a1a1a;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,255,170,0.1);
+}
+
+.info-block img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.info-block h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: #c6b8a9;
+}
+
+.info-block a {
+  color: #c6b8a9;
+  text-decoration: underline;
+}
+
+.info-block a:hover {
+  color: white;
+}
+
