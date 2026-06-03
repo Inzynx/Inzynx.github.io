@@ -3,11 +3,11 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>{{ page.title }}</title>
+  <title>{{ page.title | default: site.title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Security research, red teaming, and community-driven knowledge sharing." />
-  <link rel="stylesheet" href="/assets/css/main.css" />
-  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  {% seo %}
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" />
+  <link rel="icon" type="image/png" href="{{ '/assets/images/favicon.png' | relative_url }}" />
 </head>
 
 <body>
@@ -16,8 +16,8 @@
 
   <nav id="topbar" class="topbar hidden">
     <div class="nav-container">
-      <a href="#home" class="logo-link">
-        <img src="/assets/images/favicon.png" alt="logo" />
+      <a href="{{ '/' | relative_url }}#home" class="logo-link">
+        <img src="{{ '/assets/images/favicon.png' | relative_url }}" alt="logo" />
       </a>
       <ul class="nav-links">
         <li><a href="#Blog">Blog</a></li>
@@ -26,7 +26,7 @@
     </div>
   </nav>
 
-  <img class="bg-logo" src="/assets/images/favicon.png" alt="bg">
+  <img class="bg-logo" src="{{ '/assets/images/favicon.png' | relative_url }}" alt="bg">
 
   <div class="content-wrapper" id="home">
     <div id="typed-text" class="typewriter"></div>
@@ -90,13 +90,13 @@
       </div>
       <div class="skill-card">
         <div class="skill-icon">&#128737;</div>
-        <h3>Defense & Detection</h3>
+        <h3>Defense &amp; Detection</h3>
         <p>Sigma rules, YARA signatures, EDR telemetry analysis, threat hunting, purple team exercises.</p>
       </div>
     </div>
   </section>
 
-  <script src="/assets/js/typewriter.js"></script>
+  <script src="{{ '/assets/js/typewriter.js' | relative_url }}"></script>
 </body>
 
 </html>

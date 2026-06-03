@@ -1,9 +1,16 @@
 title: h4ck3r.be
-description: Security research. Red teaming. Malware analysis. Operating in the shadows.
+email: h4ck3r@users.noreply.github.com
+description: >-
+  Security research. Red teaming. Malware analysis. Operating in the shadows.
 baseurl: ""
 url: "https://h4ck3r.be"
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
 
 exclude:
   - README.md
   - Gemfile
   - Gemfile.lock
+  - _site_preview
