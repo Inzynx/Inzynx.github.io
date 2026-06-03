@@ -5,55 +5,98 @@
   <meta charset="UTF-8" />
   <title>{{ page.title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Security research, red teaming, and community-driven knowledge sharing." />
   <link rel="stylesheet" href="/assets/css/main.css" />
   <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
 </head>
 
 <body>
 
+  <canvas id="matrix-bg"></canvas>
+
   <nav id="topbar" class="topbar hidden">
     <div class="nav-container">
       <a href="#home" class="logo-link">
-        <img src="/assets/images/favicon.png" alt="Inzynx" />
+        <img src="/assets/images/favicon.png" alt="logo" />
       </a>
-
       <ul class="nav-links">
-        <li><a href="#Whoami">Whoami</a></li>
+        <li><a href="#Blog">Blog</a></li>
+        <li><a href="#Arsenal">Arsenal</a></li>
       </ul>
     </div>
   </nav>
 
-  <img class="bg-logo" src="/assets/images/bg-logo.png" alt="bg">
+  <img class="bg-logo" src="/assets/images/favicon.png" alt="bg">
 
-  <div class="content-wrapper">
+  <div class="content-wrapper" id="home">
     <div id="typed-text" class="typewriter"></div>
     <div id="typed-subtitle" class="typewriter"></div>
+    <div id="nav-buttons">
+      <a href="#Blog" class="hacker-btn" data-section="Blog">BLOG</a>
+      <a href="#Arsenal" class="hacker-btn" data-section="Arsenal">ARSENAL</a>
+    </div>
   </div>
 
-  <!-- herhaal dit blok zoveel je wil -->
-  <section id="Whoami" class="page-section hidden">
-    <h2>Whoami</h2>
-    <p></p>
-
-    <div class="info-block">
-      <img src="/assets/images/Ghost.png" alt="Ghost">
-      <div>
-        <h3>Inzynx</h3>
-        <p>Pentester gepassioneerd door cybersecurity, malwareontwikkeling en research. Altijd op zoek naar nieuwe uitdagingen en innovatieve manieren om digitale beveiliging te versterken. Code, exploit en ontdek – dat is mijn wereld.</p>
-        <a href="#"></a>
+  <section id="Blog" class="page-section hidden">
+    <h2 class="section-title">Blog</h2>
+    <div class="terminal-window">
+      <div class="terminal-header">
+        <span class="terminal-dot red"></span>
+        <span class="terminal-dot yellow"></span>
+        <span class="terminal-dot green"></span>
+        <span class="terminal-title">h4ck3r@blog:~$</span>
+      </div>
+      <div class="terminal-body">
+        <p><span class="prompt">$</span> cat mission.txt</p>
+        <p class="output">Breaking things to understand them. Sharing what we learn so the community gets stronger.</p>
+        <p><span class="prompt">$</span> cat focus.txt</p>
+        <p class="output">Red teaming &bull; Penetration testing &bull; Malware research &bull; Reverse engineering &bull; Threat intelligence &bull; Community-driven writeups</p>
+        <p><span class="prompt">$</span> cat philosophy.txt</p>
+        <p class="output">Understand the attack to build the defense. Break things responsibly. Share knowledge freely. Lift others up.</p>
+        <p><span class="prompt">$</span> ls posts/</p>
+        <p class="output">More content coming soon. Stay tuned.</p>
+        <p><span class="prompt">$</span> _<span class="cursor-block"></span></p>
       </div>
     </div>
-
   </section>
-  <!-- repeat this section and make sure to change the ID-->
 
-  </div>
-
+  <section id="Arsenal" class="page-section hidden">
+    <h2 class="section-title">Arsenal</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon">&#9760;</div>
+        <h3>Offensive Security</h3>
+        <p>Red team operations, AD attacks, lateral movement, C2 infrastructure, social engineering simulations.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">&#9776;</div>
+        <h3>Malware Development</h3>
+        <p>Custom loaders, EDR evasion, ntdll unhooking, credential harvesting, shellcode execution frameworks.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">&#9881;</div>
+        <h3>Reverse Engineering</h3>
+        <p>Binary analysis, unpacking, protocol reversing, firmware analysis, threat actor tool deconstruction.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">&#127760;</div>
+        <h3>Web Application Security</h3>
+        <p>OWASP Top 10+, API abuse, authentication bypass, source code review, DAST/SAST.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">&#9889;</div>
+        <h3>Infrastructure</h3>
+        <p>Lab environments, C2 staging, phishing infrastructure, DNS/HTTP tunneling, OPSEC-hardened deployments.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">&#128737;</div>
+        <h3>Defense & Detection</h3>
+        <p>Sigma rules, YARA signatures, EDR telemetry analysis, threat hunting, purple team exercises.</p>
+      </div>
+    </div>
+  </section>
 
   <script src="/assets/js/typewriter.js"></script>
-  <script src="/assets/js/terminal.js"></script>
 </body>
-
-
 
 </html>

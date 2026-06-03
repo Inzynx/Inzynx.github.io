@@ -1,297 +1,185 @@
-/* Achtergrond en basislayout */
-body {
-  background: #000;
-  color: #ccc; /* lichtgrijs voor contrast met rood logo */
-  font-family: 'Courier New', Courier, monospace;
-  margin: 0;
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  align-items: center;     /* verticaal centreren in viewport */
-  justify-content: center; /* horizontaal centreren */
+/* ── Reset & Base ── */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:        #0a0a0a;
+  --fg:        #c6b8a9;
+  --brand:     #b13232;
+  --accent:    #c6b8a9;
+  --dim:       #5a5249;
+  --green:     #4a9;
+  --card-bg:   #111;
+  --term-bg:   #0d0d0d;
+  --term-border:#2a2a2a;
+  --glow:      0 0 10px rgba(177,50,50,.35);
 }
 
-
-.content-wrapper {
-  display: flex;
-  flex-direction: column;  /* elementjes onder elkaar */
-  align-items: center;     /* lijn alles midden */
-  text-align: center;
-  gap: 0.75rem;            /* mooi luchtje tussen regels en knoppen */
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--fg);
+  font-family:'Courier New',Courier,monospace;
+  min-height:100vh;overflow-x:hidden;position:relative;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
 }
 
-/* Achtergrond fade-logo */
-.bg-logo {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  object-fit: contain;
-  pointer-events: none;
-  opacity: 0.15;
-  z-index: 0;
+/* ── Matrix Canvas ── */
+#matrix-bg{
+  position:fixed;inset:0;z-index:0;opacity:.12;pointer-events:none;
 }
 
-/* Typewriter: inline-block ➜ block zodat elke regel zijn eigen lijn neemt */
-.typewriter {
-  display: block;        /* <— NIET meer inline-block */
-  overflow: hidden;
-  margin: 0 auto;        /* horizontaal centreren binnen wrapper */
-  max-width: 100%;
+/* ── Noise overlay ── */
+body::after{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3Ccircle cx='0.5' cy='0.5' r='0.5' fill='%23fff' opacity='0.12'/%3E%3C/svg%3E");
+  background-size:2px 2px;mix-blend-mode:overlay;opacity:.4;
 }
 
-/* Grote tekst voor greeting */
-#typed-text {
-  font-size: 2rem;
+/* ── Scanlines ── */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent 0 2px,rgba(177,50,50,.06) 2px 4px);
+  mix-blend-mode:overlay;
+  animation:scanmove 4s linear infinite;
+}
+@keyframes scanmove{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
+
+/* ── BG Logo ── */
+.bg-logo{
+  position:fixed;width:100vw;height:100vh;
+  object-fit:contain;pointer-events:none;opacity:.1;z-index:0;
 }
 
-/* Kleinere tekst voor subtitle */
-#typed-subtitle {
-  font-size: 1.2rem;
-  color: #aaa;
-  margin-bottom: 1.5rem;
+/* ── Content wrapper (landing) ── */
+.content-wrapper{
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  gap:.8rem;z-index:2;padding:1rem;
 }
 
-/* Cursor styling: alleen actief element krijgt deze class */
-.cursor {
-  border-right: 2px solid #ececec;
-  animation: blink-caret 0.75s step-end infinite;
+/* ── Typewriter ── */
+.typewriter{display:block;overflow:hidden;margin:0 auto;max-width:100%}
+#typed-text{font-size:2.4rem;font-weight:700;letter-spacing:-1px;
+  filter:drop-shadow(0 0 8px var(--brand))}
+#typed-subtitle{font-size:1.15rem;color:#999;margin-bottom:1rem}
+.cursor,.cursor-block{
+  border-right:2px solid var(--fg);
+  animation:blink-caret .75s step-end infinite;
+}
+@keyframes blink-caret{50%{border-color:transparent}}
+
+/* ── Nav Buttons (landing) ── */
+#nav-buttons{
+  opacity:0;transition:opacity 1.5s ease-in;margin-top:1.5rem;
+  display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;
+}
+.hacker-btn{
+  display:inline-block;padding:.8rem 2rem;
+  font:700 1rem 'Courier New',monospace;
+  color:var(--fg);background:var(--bg);border:2px solid var(--fg);
+  text-decoration:none;position:relative;cursor:pointer;
+  filter:drop-shadow(0 0 6px var(--accent));overflow:hidden;
+  transition:background .2s,color .2s;
+}
+.hacker-btn::after{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent 0 2px,var(--brand) 2px 4px);
+  mix-blend-mode:screen;pointer-events:none;
+  animation:scanbtn 3s linear infinite;
+}
+@keyframes scanbtn{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
+.hacker-btn:hover{background:var(--fg);color:#000}
+.hacker-btn:hover::after{opacity:0}
+
+/* ── Topbar Navigation ── */
+.topbar{
+  position:fixed;top:0;width:100%;
+  background:rgba(10,10,10,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--term-border);
+  padding:1rem 1.5rem;z-index:1000;
+}
+.nav-container{display:flex;align-items:center;justify-content:center;position:relative}
+.logo-link{position:absolute;left:0;top:50%;transform:translateY(-50%);padding-left:1rem}
+.logo-link img{height:42px;filter:drop-shadow(0 0 4px var(--accent))}
+.nav-links{list-style:none;display:flex;gap:2rem;margin:0;padding:0}
+.nav-links li a{color:var(--fg);text-decoration:none;font-weight:700;
+  transition:color .2s;text-transform:uppercase;font-size:.85rem;letter-spacing:1px}
+.nav-links li a:hover{color:#fff;text-shadow:0 0 6px var(--brand)}
+
+/* ── Page Sections ── */
+.page-section{
+  padding:6rem 2rem 4rem;max-width:960px;margin:0 auto;
+  width:100%;z-index:2;
+}
+.section-title{
+  font-size:2rem;margin-bottom:2rem;color:var(--fg);
+  text-transform:uppercase;letter-spacing:4px;
+  border-bottom:2px solid var(--brand);padding-bottom:.5rem;
+  display:inline-block;
+  filter:drop-shadow(0 0 6px var(--brand));
 }
 
-@keyframes blink-caret {
-  50% {
-    border-color: transparent;
-  }
+/* ── Terminal Window ── */
+.terminal-window{
+  background:var(--term-bg);border:1px solid var(--term-border);
+  border-radius:6px;overflow:hidden;
+  box-shadow:0 4px 30px rgba(0,0,0,.5),var(--glow);
+}
+.terminal-header{
+  background:#1a1a1a;padding:.6rem 1rem;
+  display:flex;align-items:center;gap:.5rem;
+  border-bottom:1px solid var(--term-border);
+}
+.terminal-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.terminal-dot.red{background:#ff5f56}
+.terminal-dot.yellow{background:#ffbd2e}
+.terminal-dot.green{background:#27c93f}
+.terminal-title{
+  margin-left:auto;font-size:.8rem;color:var(--dim);
+  letter-spacing:1px;text-transform:uppercase;
+}
+.terminal-body{padding:1.2rem 1.5rem;font-size:.95rem;line-height:1.7}
+.terminal-body p{margin:.3rem 0}
+.prompt{color:var(--brand);font-weight:700}
+.output{color:var(--fg);padding-left:1.2rem;border-left:2px solid var(--dim);margin-left:.3rem}
+
+/* ── Skills Grid ── */
+.skills-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:1.5rem;
+}
+.skill-card{
+  background:var(--card-bg);border:1px solid var(--term-border);
+  border-radius:6px;padding:1.5rem;
+  transition:transform .2s,box-shadow .2s;
+  position:relative;overflow:hidden;
+}
+.skill-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--brand),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.skill-card:hover{transform:translateY(-4px);
+  box-shadow:0 8px 25px rgba(0,0,0,.4),var(--glow)}
+.skill-card:hover::before{opacity:1}
+.skill-icon{font-size:2rem;margin-bottom:.8rem;filter:drop-shadow(0 0 4px var(--brand))}
+.skill-card h3{color:var(--fg);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:1px;font-size:1rem}
+.skill-card p{color:var(--dim);font-size:.85rem;line-height:1.6}
+
+/* ── Hidden class ── */
+.hidden{display:none!important}
+
+/* ── Responsive ── */
+@media(max-width:640px){
+  #typed-text{font-size:1.6rem}
+  #typed-subtitle{font-size:.95rem}
+  .hacker-btn{padding:.6rem 1.2rem;font-size:.85rem}
+  .nav-links{gap:1rem}
+  .nav-links li a{font-size:.75rem}
+  .skills-grid{grid-template-columns:1fr}
+  .page-section{padding:5rem 1rem 3rem}
+  .section-title{font-size:1.5rem;letter-spacing:2px}
 }
 
-/* Nav-buttons */
-#nav-buttons {
-  opacity: 0;
-  transition: opacity 1.5s ease-in;
-  margin-top: 1.5rem;
+/* ── Flicker animation ── */
+@keyframes flicker{
+  0%,100%{opacity:1}50%{opacity:.92}75%{opacity:.97}
 }
-
-/* "Glitchy" login-achtige buttons */
-.glitch-btn {
-  display: inline-block;
-  margin: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  background-color: transparent;
-  color: #ccc;
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  font-weight: bold;
-  text-decoration: none;
-  position: relative;
-  transition: all 0.2s ease;
-  font-family: monospace;
-  overflow: hidden;
-}
-
-.glitch-btn::before,
-.glitch-btn::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  background: #ccc;
-  mix-blend-mode: difference;
-  opacity: 0;
-  animation: glitch 2s infinite;
-}
-
-.glitch-btn:hover {
-  background: #ccc;
-  color: #000;
-  box-shadow: 0 0 10px #ff0000, 0 0 40px #00ffcc33;
-}
-
-@keyframes glitch {
-  0% {
-    opacity: 0;
-    transform: translate(0, 0);
-  }
-  20% {
-    opacity: 0.3;
-    transform: translate(-2px, 2px);
-  }
-  40% {
-    opacity: 0.1;
-    transform: translate(2px, -2px);
-  }
-  60% {
-    opacity: 0.4;
-    transform: translate(-1px, 1px);
-  }
-  80% {
-    opacity: 0.2;
-    transform: translate(1px, -1px);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(0, 0);
-  }
-}
-
-/* ---------- 1. HACKER BUTTON ---------- */
-.hacker-btn {
-  display:inline-block; padding:.8rem 2rem;
-  font:700 1rem 'Courier New', monospace;
-  color:#c6b8a9; background:#000; border:2px solid #c6b8a9;
-  text-decoration:none; position:relative; cursor:pointer;
-  filter:drop-shadow(0 0 6px #c6b8a9); overflow:hidden;
-  transition:background .2s;
-}
-/* scan-line glitch */
-.hacker-btn::after {
-  content:''; position:absolute; inset:0;
-  background:repeating-linear-gradient(
-    0deg, transparent 0 2px, #b13232 2px 4px);
-  mix-blend-mode:screen; pointer-events:none;
-  animation:scan 3s linear infinite;
-}
-@keyframes scan { 0%{transform:translateY(-100%)} 100%{transform:translateY(100%)} }
-.hacker-btn:hover   { background:#c6b8a9; color:#000 }
-.hacker-btn:hover::after { opacity:0 } /* cleaner on hover */
-
-/* ---------- 2. TERMINAL OVERLAY ---------- */
-.terminal-overlay {
-  position:fixed; inset:0; background:#000; color:#c6b8a9;
-  font:1rem/1.4 'Courier New', monospace;
-  padding:5rem 2rem; overflow:auto; z-index:9999;
-}
-/* CRT-scanlines & vage ruis */
-.terminal-overlay::before {
-  content:''; position:absolute; inset:0;
-  background:linear-gradient(
-       rgba(0,0,0,.1) 0, rgba(0,0,0,0) 2px),
-             url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgZmlsbD0iI2ZmZiIgY3g9IjAuNSIgY3k9IjAuNSIgcj0iMC41Ii8+PC9zdmc+");
-  background-size:100% 4px, 2px 2px;
-  mix-blend-mode:overlay; opacity:.15; pointer-events:none;
-}
-.cursor-green {
-  color:#c6b8a9; animation:blink 1s step-end infinite;
-}
-@keyframes blink {50%{opacity:0}}
-
-/* Links die uit de terminal komen */
-.terminal-overlay a { color:#c6b8a9; text-decoration:none }
-.terminal-overlay a:hover { text-decoration:underline }
-
-/* ----------  link style inside ls -l ---------- */
-.term-link {
-  color:#c6b8a9; text-decoration:none; font-weight:700;
-  position:relative; padding-left:1.1em;
-}
-.term-link::before {
-  content:'▶'; position:absolute; left:0; opacity:0;
-  transition:opacity .2s;
-}
-.term-link:hover::before { opacity:1; }
-.term-link:hover { text-decoration:underline; }
-
-
-/* --- Navigatiebalk bovenaan --- */
-.topbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background-color: #0f0f0f;
-  color: #ffffff;
-  padding: 1.5rem 1.5rem;
-  z-index: 1000;
-  box-shadow: 0 0 10px rgba(252, 252, 252, 0.2);
-}
-
-/* Container met flex maar geen space-between */
-.nav-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center; /* centreren van links */
-}
-
-/* Logo helemaal links in de hoek met absolute positioning */
-.logo-link {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  padding-left: 1rem;
-}
-
-.logo-link img {
-  height: 42px;
-  filter: drop-shadow(0 0 4px #c6b8a9);
-}
-
-/* Menu gecentreerd */
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 2rem;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links li a {
-  color: #c6b8a9;
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.2s;
-}
-
-.nav-links li a:hover {
-  color: #ffffff;
-}
-
-/* Verborgen standaard */
-.hidden {
-  display: none;
-}
-
-
-.page-section {
-  padding: 4rem 2rem;
-  max-width: 1000px;
-  margin: 0 auto;
-  color: #fff;
-}
-
-
-/* --- Herbruikbaar contentblok voor alle secties --- */
-.info-block {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
-  background-color: #1a1a1a;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,255,170,0.1);
-}
-
-.info-block img {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  border-radius: 6px;
-}
-
-.info-block h3 {
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-  color: #c6b8a9;
-}
-
-.info-block a {
-  color: #c6b8a9;
-  text-decoration: underline;
-}
-
-.info-block a:hover {
-  color: white;
-}
-
+.page-section{animation:flicker 4s infinite}
