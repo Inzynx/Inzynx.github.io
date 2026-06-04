@@ -1,15 +1,12 @@
 "use strict";
 
-/* ── Config ── */
 const greeting     = "Welcome to h4ck3r.be";
 const subtitleText = "Security Research  //  Red Teaming  //  Malware Analysis";
 
-/* ── DOM refs ── */
 const typedText     = document.getElementById("typed-text");
 const typedSubtitle = document.getElementById("typed-subtitle");
 const navButtons    = document.getElementById("nav-buttons");
 
-/* ── Typewriter ── */
 function typeWriter(text, el, speed, done) {
   let i = 0;
   el.textContent = "";
@@ -25,7 +22,16 @@ function typeWriter(text, el, speed, done) {
   })();
 }
 
-/* ── Section navigation ── */
+function setActiveNav(id) {
+  document.querySelectorAll('.sidebar-link').forEach(function(link) {
+    link.classList.remove('active');
+    var nav = link.getAttribute('data-nav');
+    if (nav === id || (nav === 'home' && (!id || id === 'home'))) {
+      link.classList.add('active');
+    }
+  });
+}
+
 function showSection(id, updateURL) {
   if (updateURL === undefined) updateURL = true;
   var wrapper = document.querySelector('.content-wrapper');
@@ -37,6 +43,8 @@ function showSection(id, updateURL) {
   if (!id || id === 'home') {
     if (wrapper) wrapper.classList.remove('hidden');
     if (updateURL) history.pushState({}, '', '/');
+    setActiveNav('home');
+    if (window.innerWidth <= 768) closeSidebar();
     return;
   }
   var section = document.getElementById(id);
@@ -44,33 +52,39 @@ function showSection(id, updateURL) {
     section.classList.remove('hidden');
     if (updateURL) history.pushState({}, '', '#' + id);
   }
+  var mainNav = id.replace('post-', '');
+  if (id.indexOf('post-') === 0) mainNav = 'Blog';
+  setActiveNav(mainNav);
+  if (window.innerWidth <= 768) closeSidebar();
 }
 
-/* ── Bind nav links & in-page anchors ── */
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+}
+
 document.querySelectorAll('a[href^="#"]').forEach(function(link) {
   link.addEventListener('click', function(e) {
-    e.preventDefault();
     var id = this.getAttribute('href').replace('#', '');
+    var subAnchors = ['sec-bfs','sec-download','sec-auto','sec-classify','sec-analyze','sec-elevate5','sec-auth'];
+    if (subAnchors.indexOf(id) !== -1) {
+      e.preventDefault();
+      var target = document.getElementById(id);
+      if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
+      return;
+    }
+    e.preventDefault();
     showSection(id);
     window.scrollTo(0, 0);
   });
 });
 
-/* ── Bind hacker buttons ── */
-document.querySelectorAll('.hacker-btn[data-section]').forEach(function(btn) {
-  btn.addEventListener('click', function(e) {
-    e.preventDefault();
-    showSection(this.getAttribute('data-section'));
+var toggle = document.getElementById('sidebar-toggle');
+if (toggle) {
+  toggle.addEventListener('click', function() {
+    document.getElementById('sidebar').classList.toggle('open');
   });
-});
-document.querySelectorAll('.hacker-btn[href]').forEach(function(btn) {
-  btn.addEventListener('click', function(e) {
-    e.preventDefault();
-    showSection(this.getAttribute('href').replace('#', ''));
-  });
-});
+}
 
-/* ── Deep link on load ── */
 window.addEventListener('DOMContentLoaded', function() {
   var hash = window.location.hash.replace('#', '');
   if (hash) showSection(hash, false);
@@ -80,32 +94,24 @@ window.addEventListener('popstate', function() {
   showSection(hash, false);
 });
 
-/* ── Boot sequence ── */
 window.addEventListener("DOMContentLoaded", function() {
   var lastTyped = localStorage.getItem("lastTyped");
   var today = new Date().toISOString().slice(0, 10);
-
-  function showTopbar() {
-    document.getElementById("topbar").classList.remove("hidden");
-  }
 
   if (lastTyped === today) {
     typedText.textContent = greeting;
     typedSubtitle.textContent = subtitleText;
     if (navButtons) navButtons.style.opacity = "1";
-    showTopbar();
   } else {
     typeWriter(greeting, typedText, 80, function() {
       typeWriter(subtitleText, typedSubtitle, 55, function() {
         localStorage.setItem("lastTyped", today);
         if (navButtons) navButtons.style.opacity = "1";
-        showTopbar();
       });
     });
   }
 });
 
-/* ── Matrix rain background ── */
 (function() {
   var canvas = document.getElementById('matrix-bg');
   if (!canvas) return;
