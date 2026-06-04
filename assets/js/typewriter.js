@@ -46,11 +46,13 @@ function showSection(id, updateURL) {
   }
 }
 
-/* ── Bind nav links ── */
-document.querySelectorAll('.nav-links a').forEach(function(link) {
+/* ── Bind nav links & in-page anchors ── */
+document.querySelectorAll('a[href^="#"]').forEach(function(link) {
   link.addEventListener('click', function(e) {
     e.preventDefault();
-    showSection(this.getAttribute('href').replace('#', ''));
+    var id = this.getAttribute('href').replace('#', '');
+    showSection(id);
+    window.scrollTo(0, 0);
   });
 });
 

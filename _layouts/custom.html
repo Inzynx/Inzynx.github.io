@@ -8,6 +8,13 @@
   {% seo %}
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" />
   <link rel="icon" type="image/png" href="{{ '/assets/images/favicon.png' | relative_url }}" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G2T0ZFJSXV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-G2T0ZFJSXV');
+  </script>
 </head>
 
 <body>
@@ -54,11 +61,55 @@
         <p><span class="prompt">$</span> cat philosophy.txt</p>
         <p class="output">Understand the attack to build the defense. Break things responsibly. Share knowledge freely. Lift others up.</p>
         <p><span class="prompt">$</span> ls posts/</p>
-        <p class="output">More content coming soon. Stay tuned.</p>
+        <p class="output"><a href="#post-cmloot" class="blog-link">cmloot - Forked, Extended, and Weaponized</a></p>
         <p><span class="prompt">$</span> _<span class="cursor-block"></span></p>
       </div>
     </div>
   </section>
+
+  <article id="post-cmloot" class="page-section hidden blog-post">
+    <a href="#Blog" class="back-link">&larr; Back to Blog</a>
+    <h2 class="section-title">cmloot &mdash; Forked, Extended, and Weaponized</h2>
+    <div class="terminal-window">
+      <div class="terminal-header">
+        <span class="terminal-dot red"></span>
+        <span class="terminal-dot yellow"></span>
+        <span class="terminal-dot green"></span>
+        <span class="terminal-title">h4ck3r@cmloot:~$</span>
+      </div>
+      <div class="terminal-body">
+        <p><span class="prompt">$</span> whoami</p>
+        <p class="output">A fork of <a href="https://github.com/shelltrail/cmloot" class="inline-link" target="_blank" rel="noopener">shelltrail/cmloot</a> &mdash; the SCCM Content Library enumeration and extraction tool by <a href="https://www.shelltrail.com/research/cmloot/" class="inline-link" target="_blank" rel="noopener">Andreas Vikerup / Shelltrail</a>.</p>
+
+        <p><span class="prompt">$</span> diff upstream.md fork.md</p>
+        <p class="output"><strong>The original cmloot</strong> does one thing well: it connects to an SCCM Distribution Point over SMB, traverses <code>SCCMContentLib$</code>, and downloads files by extension. Clean, effective, and no-frills.</p>
+        <p class="output"><strong>This fork</strong> takes that foundation and turns it into a full offensive pipeline. Here is what changed:</p>
+
+        <p><span class="prompt">$</span> cat additions.txt</p>
+        <p class="output highlight">[!] BFS Inventory with Progress</p>
+        <p class="output">The original walked the share sequentially with no visibility. The fork uses BFS traversal with progress bars, ETA, and per-directory file counts so you know what is happening and how long to wait.</p>
+        <p class="output highlight">[!] Interactive Download Selection</p>
+        <p class="output">Instead of blindly downloading everything matching an extension, the fork shows you a prioritized table (file size, category, priority markers) and lets you pick which files to grab. No more wasting time on 4 GB install.wim files when you only need boot.wim.</p>
+        <p class="output highlight">[!] Auto Pipeline</p>
+        <p class="output">One flag &mdash; <code>-auto</code> &mdash; runs LDAP discovery, inventory, download, and classification in sequence. Point it at a DC and walk away.</p>
+        <p class="output highlight">[!] File Classification</p>
+        <p class="output">Downloaded files are categorized offline: credentials, OSD media, config files, scripts, certificates, and more. High-value targets get <code>[!]</code> markers so you immediately see what matters.</p>
+        <p class="output highlight">[!] cmloot_analyze.py &mdash; Credential Deep Dive</p>
+        <p class="output">A separate scanner that runs over downloaded loot and surfaces plaintext passwords, PSCredential usage, connection strings, private keys, API tokens, LDAP paths, service accounts &mdash; filtered, deduplicated, and rated by severity (CRITICAL / HIGH / MEDIUM). Supports JSON output for pipeline integration.</p>
+        <p class="output highlight">[!] ELEVATE-5: Distribution Point Takeover</p>
+        <p class="output">The fork adds <code>-elevate5</code> to extract <code>Variables.dat</code> from downloaded WIM boot images. Combined with <a href="https://github.com/MWR-CyberSec/PXEThief" class="inline-link" target="_blank" rel="noopener">PXEThief</a> you can decrypt the embedded PKI certificate (Client Auth EKU, exportable private key) and authenticate as the DP machine account via <a href="https://github.com/ly4k/Certipy" class="inline-link" target="_blank" rel="noopener">Certipy</a>. Full AD compromise from a single misconfigured DP.</p>
+        <p class="output highlight">[!] More Auth Options</p>
+        <p class="output">Pass-the-hash (<code>-hashes</code>), computer account auth (<code>-no-pass</code>), Kerberos (<code>-k</code>), and NTLM relay via proxychains &mdash; all carried over from upstream, now with cleaner argument handling.</p>
+
+        <p><span class="prompt">$</span> cat tl_dr.txt</p>
+        <p class="output">Same SMB traversal core. New offensive surface. If you were using the original cmloot, the fork is a drop-in replacement that gives you targeting, classification, credential extraction, and ELEVATE-5 in a single tool.</p>
+
+        <p><span class="prompt">$</span> cat links.txt</p>
+        <p class="output"><a href="https://github.com/shelltrail/cmloot" class="inline-link" target="_blank" rel="noopener">Original: shelltrail/cmloot</a> &bull; <a href="https://www.shelltrail.com/research/cmloot/" class="inline-link" target="_blank" rel="noopener">Shelltrail Research</a> &bull; <a href="https://github.com/subat0mik/Misconfiguration-Manager/blob/main/attack-techniques/ELEVATE/ELEVATE-5/ELEVATE-5_description.md" class="inline-link" target="_blank" rel="noopener">ELEVATE-5 Documentation</a></p>
+        <p><span class="prompt">$</span> _<span class="cursor-block"></span></p>
+      </div>
+    </div>
+  </article>
 
   <section id="Arsenal" class="page-section hidden">
     <h2 class="section-title">Arsenal</h2>

@@ -178,6 +178,19 @@ body::before{
   .section-title{font-size:1.5rem;letter-spacing:2px}
 }
 
+/* ── Blog Links ── */
+.blog-link,.inline-link{color:var(--green);text-decoration:none;transition:color .2s}
+.blog-link:hover,.inline-link:hover{color:#fff;text-shadow:0 0 6px var(--green)}
+.blog-link{display:block;margin:.4rem 0;font-weight:700}
+
+/* ── Blog Post ── */
+.blog-post .back-link{
+  color:var(--brand);text-decoration:none;font-size:.9rem;font-weight:700;
+  display:inline-block;margin-bottom:1.5rem;letter-spacing:1px;
+}
+.blog-post .back-link:hover{color:#fff}
+.blog-post .highlight{color:var(--brand);font-weight:700}
+
 /* ── Flicker animation ── */
 @keyframes flicker{
   0%,100%{opacity:1}50%{opacity:.92}75%{opacity:.97}
