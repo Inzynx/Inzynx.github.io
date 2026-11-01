@@ -65,7 +65,8 @@ function closeSidebar() {
 document.querySelectorAll('a[href^="#"]').forEach(function(link) {
   link.addEventListener('click', function(e) {
     var id = this.getAttribute('href').replace('#', '');
-    var subAnchors = ['sec-bfs','sec-download','sec-auto','sec-classify','sec-analyze','sec-elevate5','sec-auth'];
+    var subAnchors = ['sec-bfs','sec-download','sec-auto','sec-classify','sec-analyze','sec-elevate5','sec-auth',
+                      'tb-why','tb-isolation','tb-windows','tb-gui','tb-cross'];
     if (subAnchors.indexOf(id) !== -1) {
       e.preventDefault();
       var target = document.getElementById(id);

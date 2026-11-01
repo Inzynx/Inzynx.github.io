@@ -65,6 +65,15 @@
       <h2 class="section-title">Blog</h2>
       <p class="section-subtitle">Research writeups, tool breakdowns, and offensive deep dives.</p>
       <div class="blog-grid">
+        <a href="#post-twinbird" class="blog-card">
+          <div class="blog-card-tag">NetBird / VPN</div>
+          <h3>TwinBird &mdash; Several NetBird Accounts, One Machine</h3>
+          <p>NetBird runs one account per host. TwinBird isolates every connection and ships a per-instance adapter-ID client, so a client mesh, a lab and your own network stay up at the same time.</p>
+          <div class="blog-card-meta">
+            <span>2026-11-01</span>
+            <span class="tag-sev">TOOL</span>
+          </div>
+        </a>
         <a href="#post-cmloot" class="blog-card">
           <div class="blog-card-tag">SCCM</div>
           <h3>cmloot &mdash; Forked, Extended, and Weaponized</h3>
@@ -72,6 +81,14 @@
           <div class="blog-card-meta">
             <span>2026-06-04</span>
             <span class="tag-sev">CRITICAL</span>
+          </div>
+        </a>
+        <a href="https://github.com/Inzynx/secureboot-efi-clone" class="blog-card" target="_blank" rel="noopener">
+          <div class="blog-card-tag">Secure Boot</div>
+          <h3>secureboot-efi-clone &mdash; Signed Linux Bootloader Kit</h3>
+          <p>A Secure Boot&ndash;signed Linux bootloader kit. Read the project on GitHub.</p>
+          <div class="blog-card-meta">
+            <span>GitHub &#8599;</span>
           </div>
         </a>
       </div>
@@ -311,6 +328,63 @@ proxychains python3 cmloot.py CORP/WORKSTN$@10.0.0.50 -n \
           <a href="#sec-analyze" class="toc-link">Credential Analysis</a>
           <a href="#sec-elevate5" class="toc-link">ELEVATE-5</a>
           <a href="#sec-auth" class="toc-link">Auth Options</a>
+        </nav>
+      </div>
+    </article>
+
+    <article id="post-twinbird" class="page-section hidden blog-post">
+      <div class="post-layout">
+        <div class="post-content">
+          <a href="#Blog" class="back-link">&larr; Back to Blog</a>
+          <h2 class="section-title">TwinBird &mdash; Several NetBird Accounts, One Machine</h2>
+          <p class="post-intro">NetBird is a WireGuard-based mesh VPN, and it assumes one account per machine. The moment you work across more than one mesh &mdash; a client's network, a lab, your own infrastructure &mdash; you are stuck tearing one connection down to bring the other up. <a href="https://github.com/Inzynx/TwinBird" class="inline-link" target="_blank" rel="noopener">TwinBird</a> runs them in parallel: each account gets its own identity, config, daemon control channel and WireGuard interface, driven from a CLI or a small desktop app. It builds on <a href="https://github.com/OseSem/twinbird" class="inline-link" target="_blank" rel="noopener">OseSem/twinbird</a> and never touches your existing NetBird install.</p>
+
+          <h3 id="tb-why" class="post-heading">The one-account wall</h3>
+          <p class="post-text">On Windows, stock NetBird 0.64.2 requests the <em>same fixed Wintun adapter GUID</em> for every interface it creates. Give the second connection a different name and elevate the process &mdash; Windows still rejects the adapter, because the GUID collides. Worse, authentication can register the peer in the dashboard <em>before</em> the local adapter fails, so you end up with a ghost peer and no tunnel. Administrator rights do not fix it; it is an identifier collision, not a permissions problem.</p>
+          <pre class="code-block">[+] Authenticated, peer registered
+[-] creating interface: Cannot create a file when that file already exists
+    (fixed Wintun GUID collision, not an elevation failure)</pre>
+
+          <h3 id="tb-isolation" class="post-heading">Per-instance isolation</h3>
+          <p class="post-text">Each named instance is fully separated: its own config directory, its own NetBird state via <code>NB_STATE_DIR</code> (and a redirected <code>%PROGRAMDATA%</code> on Windows), its own daemon control channel (a loopback TCP port on Windows, a Unix socket on Linux/macOS), and its own interface name and WireGuard UDP port &mdash; all with collision avoidance against your primary and the other instances. TwinBird launches a dedicated <code>netbird service run</code> daemon per instance and runs <code>netbird up</code> against it.</p>
+          <pre class="code-block"># Start a work account with a setup key
+twinbird up work --management-url https://netbird.corp.example.com --setup-key YOUR_KEY
+
+# A second account on NetBird Cloud via browser/OAuth (omit --setup-key)
+twinbird up personal --management-url https://api.netbird.io:443
+
+# Both online and independent
+twinbird list
+#   personal: running (persistent)
+#   work: running (persistent)</pre>
+
+          <h3 id="tb-windows" class="post-heading">The per-instance Windows client</h3>
+          <p class="post-text">To beat the fixed-GUID limitation, TwinBird builds a separate NetBird client from source with a small patch: it feeds each instance's ID into NetBird's own <code>CustomWindowsGUIDString</code> hook, read from <code>TWINBIRD_WINTUN_GUID</code>. The build script checks the release tag and source commit, compiles to a temporary path, and verifies two different adapter IDs through NetBird's real GUID function before publishing the binary. Your installed NetBird executable is never modified. One command does the whole setup &mdash; venv, client build when missing, PATH entry and a Start Menu shortcut:</p>
+          <pre class="code-block">powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install-windows.ps1</pre>
+          <p class="post-text dim-text">Add <code>-Clean</code> to reinstall; uninstall with <code>scripts\uninstall-windows.ps1</code>. The build step needs Go 1.25+ and Git, and is Windows-only &mdash; Linux and WSL use the installed <code>netbird</code> directly.</p>
+
+          <h3 id="tb-gui" class="post-heading">Desktop manager &amp; tray</h3>
+          <p class="post-text">Beyond the CLI, <code>twinbird gui</code> opens a small manager with a system-tray icon: add instances, start/stop, rename, toggle autostart, and adopt an already-installed NetBird (read-only toward your primary). On Windows it launches detached through <code>pythonw.exe</code>, so no console window lingers and closing the shell does not kill it. The header shows whether it is running as Administrator or as a standard user, with a one-click "Restart as administrator" when you need to create adapters.</p>
+
+          <h3 id="tb-cross" class="post-heading">Cross-platform status</h3>
+          <p class="post-text">Windows multi-instance has been exercised with NetBird 0.64.2 and the separate client. On Linux and WSL the GUI runs in the foreground under <code>sudo</code> (WSLg shows the window without a tray); a setup-key connection has been confirmed in WSL. macOS is source-reviewed and covered by mocked tests, not yet live-validated. It is an experimental project, not a stable release &mdash; treated as such on purpose.</p>
+
+          <div class="post-bottom">
+            <p class="post-text">One tool, several meshes, no tearing connections down. Everything is opt-in and your existing NetBird keeps working untouched.</p>
+            <div class="post-links">
+              <a href="https://github.com/Inzynx/TwinBird" class="inline-link" target="_blank" rel="noopener">GitHub Repo</a>
+              <a href="https://netbird.io" class="inline-link" target="_blank" rel="noopener">NetBird</a>
+              <a href="https://github.com/OseSem/twinbird" class="inline-link" target="_blank" rel="noopener">Upstream (OseSem)</a>
+            </div>
+          </div>
+        </div>
+        <nav class="toc">
+          <div class="toc-title">Contents</div>
+          <a href="#tb-why" class="toc-link">The one-account wall</a>
+          <a href="#tb-isolation" class="toc-link">Per-instance isolation</a>
+          <a href="#tb-windows" class="toc-link">Windows client</a>
+          <a href="#tb-gui" class="toc-link">Desktop manager</a>
+          <a href="#tb-cross" class="toc-link">Cross-platform</a>
         </nav>
       </div>
     </article>
