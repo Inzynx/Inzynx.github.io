@@ -2,24 +2,25 @@
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:        #0a0a0a;
-  --fg:        #aaa49c;
-  --fg-light:  #c6b8a9;
+  --fg:        #d7d2ca;
+  --fg-light:  #f1ebe2;
   --brand:     #b13232;
+  --brand-text:#f0706f;
   --accent:    #c6b8a9;
-  --dim:       #6a6259;
-  --green:     #4a9;
+  --dim:       #9a9289;
+  --green:     #45c9a5;
   --card-bg:   #111;
   --term-bg:   #0d0d0d;
-  --term-border:#222;
+  --term-border:#2a2a2a;
   --glow:      0 0 8px rgba(177,50,50,.25);
   --sidebar-w: 160px;
 }
 
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;font-size:112.5%}
 body{
   background:var(--bg);color:var(--fg);
   font-family:'Courier New',Courier,monospace;
-  font-size:.75rem;line-height:1.55;
+  font-size:.9rem;line-height:1.6;
   min-height:100vh;overflow-x:hidden;position:relative;
 }
 
@@ -136,7 +137,7 @@ body::before{
   font-size:1.15rem;margin-bottom:.5rem;color:var(--fg-light);
   text-transform:uppercase;letter-spacing:3px;
   border-bottom:2px solid var(--brand);padding-bottom:.35rem;
-  display:inline-block;font-weight:700;filter:drop-shadow(0 0 6px var(--brand));
+  display:inline-block;font-weight:700;
 }
 .section-subtitle{color:var(--dim);font-size:.72rem;margin-bottom:1.5rem;letter-spacing:.5px}
 
@@ -153,11 +154,11 @@ body::before{
 .blog-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--brand),transparent);opacity:0;transition:opacity .3s}
 .blog-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.5),var(--glow);border-color:var(--brand)}
 .blog-card:hover::before{opacity:1}
-.blog-card-tag{display:inline-block;font-size:.55rem;font-weight:700;color:var(--brand);letter-spacing:2px;text-transform:uppercase;margin-bottom:.3rem}
+.blog-card-tag{display:inline-block;font-size:.55rem;font-weight:700;color:var(--brand-text);letter-spacing:2px;text-transform:uppercase;margin-bottom:.3rem}
 .blog-card h3{font-size:.82rem;color:var(--fg-light);margin-bottom:.35rem;letter-spacing:.5px;font-weight:600}
 .blog-card p{color:var(--dim);font-size:.72rem;line-height:1.5;margin-bottom:.5rem}
 .blog-card-meta{display:flex;align-items:center;gap:.8rem;font-size:.6rem;color:#555;letter-spacing:1px}
-.tag-sev{font-size:.5rem;font-weight:600;padding:.1rem .4rem;border:1px solid var(--brand);color:var(--brand);letter-spacing:1px}
+.tag-sev{font-size:.5rem;font-weight:600;padding:.1rem .4rem;border:1px solid var(--brand);color:var(--brand-text);letter-spacing:1px}
 
 /* ── Blog Post Layout ── */
 .post-layout{display:flex;gap:1.5rem}
@@ -181,7 +182,7 @@ body::before{
 
 /* ── Blog Post ── */
 .blog-post{max-width:1100px}
-.blog-post .back-link{color:var(--brand);text-decoration:none;font-size:.72rem;display:block;margin-bottom:.8rem;letter-spacing:1px;font-weight:400}
+.blog-post .back-link{color:var(--brand-text);text-decoration:none;font-size:.72rem;display:block;margin-bottom:.8rem;letter-spacing:1px;font-weight:400}
 .blog-post .back-link:hover{color:#fff}
 .post-intro{color:var(--dim);font-size:.72rem;line-height:1.6;margin-bottom:1rem}
 .post-heading{
@@ -194,7 +195,7 @@ body::before{
 .post-bottom{margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--term-border)}
 .post-links{display:flex;flex-wrap:wrap;gap:.3rem 1rem;margin-top:.5rem}
 .inline-link{color:var(--green);text-decoration:none;transition:color .2s;font-size:.68rem}
-.inline-link:hover{color:#fff;text-shadow:0 0 6px var(--green))}
+.inline-link:hover{color:#fff;text-shadow:0 0 6px var(--green)}
 
 /* ── Code Compare (stacked) ── */
 .code-compare{display:grid;grid-template-columns:1fr;gap:.6rem;margin:.5rem 0 1rem}
@@ -206,7 +207,7 @@ body::before{
 .code-block{
   background:#050505;border:1px solid var(--term-border);border-radius:3px;
   padding:.5rem .7rem;margin:.3rem 0 .8rem;overflow-x:auto;
-  font-size:.65rem;line-height:1.5;color:var(--fg);
+  font-size:.8rem;line-height:1.55;color:var(--fg);
   white-space:pre;font-family:'Courier New',Courier,monospace;font-weight:400;
 }
 
@@ -230,7 +231,7 @@ body::before{
 .terminal-title{margin-left:auto;font-size:.65rem;color:var(--dim);letter-spacing:1px;text-transform:uppercase}
 .terminal-body{padding:.8rem 1rem;font-size:.75rem;line-height:1.55;font-weight:400}
 .terminal-body p{margin:.15rem 0}
-.prompt{color:var(--brand);font-weight:600}
+.prompt{color:var(--brand-text);font-weight:600}
 .output{color:var(--fg);padding-left:.8rem;border-left:2px solid var(--term-border);margin-left:.15rem}
 
 /* ── Skills Grid ── */
